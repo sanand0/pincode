@@ -1,0 +1,24 @@
+application: pincodemap
+version: pincodemap-main
+runtime: python
+api_version: 1
+
+builtins:
+- remote_api: on
+
+handlers:
+- url: /robots.txt
+  static_files: robots.txt
+  upload: robots.txt
+
+- url: /favicon.ico
+  static_files: favicon.ico
+  upload: favicon.ico
+
+- url: /static/(.*)
+  static_files: static/\1
+  upload: static/(.*\.(gif|png|jpg|ico|js|css))
+  expiration: "999d"
+
+- url: /.*
+  script: main.py

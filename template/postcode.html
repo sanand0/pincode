@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block title %}{{ code }}{% endblock %}
+
+{% block body %}
+<p><a href="/">home</a></p>
+<h1>{{ code }}{% if data.place_name %}: {{ data.place_name }}, {{ data.admin_name1 }}{% endif %}</h1>
+<form method="post">
+ <input class="text" type="text" name="place_name"  id="place_name"  title="Place"     placeholder="Place"     value="{{ data.place_name }}"  >
+ <input class="text" type="text" name="admin_name1" id="admin_name1" title="State"     placeholder="State"     value="{{ data.admin_name1 }}" >
+ <input class="text" type="text" name="latitude"    id="latitude"    title="Latitude"  placeholder="Latitude"  value="{{ data.latitude }}"    >
+ <input class="text" type="text" name="longitude"   id="longitude"   title="Longitude" placeholder="Longitude" value="{{ data.longitude }}"   >
+ <input class="submit" type="submit" name="submit" id="submit" value="Save">
+</form>
+
+<form id="searchform">
+ <input class="text" type="text" id="search" name="search" value="{{ data.place_name }}, {{ data.admin_name1 }}">
+ <input class="submit" type="submit" name="searchgo" id="searchgo" value="Search">
+</form>
+
+<div id="map_canvas"></div>
+
+{% endblock %}
+
+{% block script %}
+<script>
+var $lat = $('#latitude'),
+    $lng = $('#longitude'),
+    $submit = $('#submit'),
+    geocoder, map, marker;
+function init() {
+  var pos = new google.maps.LatLng({{ data.latitude }}, {{ data.longitude }});
+  map = new google.maps.Map(document.getElementById("map_canvas"), {
+    zoom: {% ifequal data.accuracy -1 %}5{% else %}13{% endifequal %},
+    center: pos,
+    mapTypeId: google.maps.MapTypeId.ROADMAP
+  });
+
+  marker = new google.maps.Marker({
+    position: pos,
+    map: map,
+    title: "{{ data.place_name }}",
+    draggable: true
+  });
+
+  google.maps.event.addListener(marker, 'position_changed', function() {
+    $lat.val(marker.position.lat());
+    $lng.val(marker.position.lng());
+    $submit.show();
+  });
+
+  geocoder = new google.maps.Geocoder();
+}
+
+$('#searchform').submit(function(e) {
+  geocoder.geocode({'address': $('#search').val()}, function(results, status) {
+    if (status == google.maps.GeocoderStatus.OK) {
+      map.setCenter(results[0].geometry.location);
+      while (!map.getBounds().contains(marker.getPosition())) { map.setZoom(map.getZoom() - 1); }
+      var searchMarker = new google.maps.Marker({
+          map: map,
+          position: results[0].geometry.location,
+          icon: 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%e2%80%a2|FFFF00|000000'
+      });
+    } else {
+      alert("Geocode was not successful for the following reason: " + status);
+    }
+  });
+  e.preventDefault();
+});
+
+init();
+</script>
+{% endblock %}
