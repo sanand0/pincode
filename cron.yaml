@@ -1,0 +1,4 @@
+cron:
+- description: create downloadable file
+  url: /_download
+  schedule: every 24 hours
