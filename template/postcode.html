@@ -5,6 +5,7 @@
 {% block body %}
 <p><a href="/">home</a></p>
 <h1>{{ code }}{% if data.place_name %}: {{ data.place_name }}, {{ data.admin_name1 }}{% endif %}</h1>
+{% if user %}
 <form method="post">
  <input class="text" type="text" name="place_name"  id="place_name"  title="Place"     placeholder="Place"     value="{{ data.place_name }}"  >
  <input class="text" type="text" name="admin_name1" id="admin_name1" title="State"     placeholder="State"     value="{{ data.admin_name1 }}" >
@@ -12,18 +13,41 @@
  <input class="text" type="text" name="longitude"   id="longitude"   title="Longitude" placeholder="Longitude" value="{{ data.longitude }}"   >
  <input class="submit" type="submit" name="submit" id="submit" value="Save">
 </form>
+{% else %}
+<a href="/login?continue=/{{ code }}">Log in to submit your corrections</a>
+{% endif %}
 
 <form id="searchform">
- <input class="text" type="text" id="search" name="search" value="{{ data.place_name }}, {{ data.admin_name1 }}">
+ <input class="text" type="text" id="search" name="search" value="{% if data.place_name %}{{ data.place_name }}, {{ data.admin_name1 }}{% endif %}">
  <input class="submit" type="submit" name="searchgo" id="searchgo" value="Search">
 </form>
 
 <div id="map_canvas"></div>
 
+<div id="history">
+<h2>Previous edits</h2>
+<ul>{% for row in history %}
+ <li>{{ row.u }}: {{ row.p }}, {{ row.a }}. {{ row.x }}, {{ row.y }}</li>
+{% endfor %}</ul>
+</div>
+
+<div id="disqus_thread"></div>
 {% endblock %}
 
 {% block script %}
+<script type="text/javascript">
+var disqus_shortname = 'pincodemap';
+var disqus_identifier = '{{ code }}';
+var disqus_url = 'http://pincode.datameet.org/{{ code }}';
+(function() {
+  var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+  dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
 <script>
+$('#history h2').click(function(e) { $(this).next().slideToggle(200); });
+
 var $lat = $('#latitude'),
     $lng = $('#longitude'),
     $submit = $('#submit'),
@@ -46,7 +70,6 @@ function init() {
   google.maps.event.addListener(marker, 'position_changed', function() {
     $lat.val(marker.position.lat());
     $lng.val(marker.position.lng());
-    $submit.show();
   });
 
   geocoder = new google.maps.Geocoder();

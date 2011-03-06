@@ -5,5 +5,40 @@
 {% block body %}
 <h1>Postal Code Map</h1>
 
-<p>Basic info here</p>
+<p>This is an effort by <a href="http://www.datameet.org/">datameet</a> to create a reasonably accurate <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons</a> geomapping of <a href="http://en.wikipedia.org/wiki/Postal_Index_Number">PIN codes</a> in India.</p>
+
+<dl>
+ <dt>How do I contribute to the map?</dt>
+ <dd>Go to <code><a href="http://pincode.datameet.org/IN/110001">http://pincode.datameet.org/IN/110001</a></code> (or any other PIN code)
+     <br>Place or move the marker where you think the PIN code should be placed. Save it.
+     <br>Anyone can <a href="/login">log in</a> and edit. A history of all changes will be maintained.</dd>
+
+ <dt>How do I get the data out?</dt>
+ <dd>Download a <a href="/download">dump</a>.</dd>
+
+ <dt>How do I keep track of what's changing?</dt>
+ <dd>Subscribe to the <a href="/feed">feed</a>.</dd>
+
+ <dt>How good is this data?</dt>
+ <dd>The original data was sourced from <a href="http://download.geonames.org/export/zip/">GeoNames</a>. We've no idea how good or bad it is.
+     <br>If you know any better bulk sources of data, please share at the <a href="https://groups.google.com/group/datameet">datameet mailing list</a>.</dd>
+
+ <dt>How do I contribute to the code?</dt>
+ <dd>Fork the code on <a href="https://github.com/sanand0/pincode">Github</a>, make the change, and submit a pull request.</dd>
+
+</dl>
+
+<h2>Recent changes</h2>
+<ul>{% for event in events %}
+ <li>{{ event.user.nickname }}: <a href="/{{ event.text }}">{{ event.text }}</a>, {{ event.time|date:"D d M Y" }}</li>
+{% endfor %}</ul>
+
+<div id="license">
+<a rel="license" href="http://creativecommons.org/licenses/by/3.0/">
+<img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by/3.0/88x31.png" />
+</a>
+<p>This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution 3.0 License</a>.</p>
+</div>
+
+
 {% endblock %}

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+<title>Postal code map changes</title>
+<link href="http://pincode.datameet.org/feed" rel="self" />
+<link href="http://pincode.datameet.org/" />
+<id>http://pincode.datameet.org/</id>
+<updated>{{ events.0.time|date:"Y-m-d\Th:i:s\ZZ" }}</updated>
+<author>
+ <name>Datameet</name>
+ <email>s.anand@datameet.org</email>
+</author>
+
+{% for event in events %}
+<entry>
+ <title>{{ event.text }}</title>
+ <link rel="alternate" type="text/html" href="http://pincode.datameet.org/{{ event.text }}"/>
+ <id>{{ event.key.id }}</id>
+ <updated>{{ event.time|date:"Y-m-d\Th:i:s\ZZ" }}</updated>
+ <summary>Some text.</summary>
+</entry>
+{% endfor %}
+
+</feed>

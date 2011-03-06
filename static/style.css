@@ -17,6 +17,7 @@ body {
 }
 
 h1, h2, h3, h4, th {
+  font-weight: bold;
   margin: 0;
   color: #4d8cbf;
   margin-bottom: 0.25em;
@@ -29,7 +30,12 @@ input.text       { padding: 4px 2px; margin: 5px 3px 5px 0; font-weight: bold; b
 input.submit     { padding: 2px 8px; margin: 5px 3px 5px 0; font-weight: bold; }
 input.text:hover { border: 1px inset #eee; }
 
-#submit { display: none; }
 #latitude, #longitude { width: 9em; }
 #search { width: 750px; }
 #searchgo { width: 85px; margin-right: 0}
+
+#license { margin-top: 2em; }
+
+dl { margin: 2em 0; }
+dt { margin-top: 1em; font-weight: bold; color: #c0504d; }
+dd { padding-left: 2em; }
