@@ -16,7 +16,7 @@
  <link rel="alternate" type="text/html" href="http://pincode.datameet.org/{{ event.text }}"/>
  <id>{{ event.key.id }}</id>
  <updated>{{ event.time|date:"Y-m-d\Th:i:s\ZZ" }}</updated>
- <summary>Some text.</summary>
+ <summary>{{ event.user }} updated postal code <a href="http://pincode.datameet.org/{{ event.text }}">{{ event.text }}</a></summary>
 </entry>
 {% endfor %}
 
