@@ -20,7 +20,7 @@ handlers:
   upload: static/(.*\.(gif|png|jpg|ico|js|css))
   expiration: "1d"
 
-- url: /_*
+- url: /_.*
   script: main.py
   login: admin
 
