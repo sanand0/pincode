@@ -18,7 +18,7 @@ handlers:
 - url: /static/(.*)
   static_files: static/\1
   upload: static/(.*\.(gif|png|jpg|ico|js|css))
-  expiration: "999d"
+  expiration: "1d"
 
 - url: /.*
   script: main.py

@@ -61,7 +61,7 @@ class CodePage(webapp.RequestHandler):
         if old_data:
             history = json.loads(old_data.history or '[]')
             history.append({
-                'u': old_data.author.nickname(),
+                'u': old_data.author and old_data.author.nickname() or 'None',
                 'p': old_data.place_name,
                 'a': old_data.admin_name1,
                 'x': old_data.latitude,
