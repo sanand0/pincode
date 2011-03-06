@@ -7,13 +7,13 @@ This is an effort by [datameet](http://www.datameet.org) to create a reasonably 
 
 **How do I contribute to the map?**
 
-Go to http://pincode.datameet.org/IN/110001 (or any other PIN code).
+Go to [http://pincode.datameet.org/IN/110001](http://pincode.datameet.org/IN/110001) (or any other PIN code).
 Place or move the marker where you think the PIN code should be placed. Save it.
 Anyone can log in and edit. A history of all changes will be maintained.
 
 **How do I get the data out?**
 
-Download a http://pincode.datameet.org/download.
+Download from [http://pincode.datameet.org/download](http://pincode.datameet.org/download).
 
 **How good is this data?**
 
