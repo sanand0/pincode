@@ -1,0 +1,39 @@
+# To import data follow the steps
+# Get the csv file from http://pincode.datameet.org/download
+# If the csv file doesn't have any header line, then add the below line excluding # in the front
+# country_code,postal_code,place_name,state,latitude,longitude,accuracy
+# Syntax for uploading data
+# appcfg.py upload_data --config_file=bulkloader.yaml --url=<Url> --kind=PostalCode --filename=<csv file name> .
+python_preamble:
+- import: google.appengine.ext.bulkload.transform
+- import: google.appengine.ext.db
+- import: re
+- import: base64
+- import: main
+
+transformers:
+- kind: PostalCode
+  connector: csv
+  property_map:
+    - property: __key__
+      import_template: "%(country_code)s/%(postal_code)s"
+
+    - property: place_name
+      external_name: place_name
+ 
+    - property: admin_name1
+      external_name: state
+ 
+    - property: latitude
+      external_name: latitude
+ 
+    - property: longitude
+      external_name: longitude
+ 
+    - property: accuracy
+      external_name: accuracy
+      import_transform: transform.none_if_empty(int)
+ 
+    - property: history
+      external_name: history
+      default_value: ""

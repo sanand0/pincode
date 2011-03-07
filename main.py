@@ -86,7 +86,7 @@ class CodePage(webapp.RequestHandler):
         )
         data.put()
         Event(user=user,text=code).put()
-        self.redirect('/')
+        self.redirect('/' + code)
 
 class BuildDownload(webapp.RequestHandler):
     def get(self):
