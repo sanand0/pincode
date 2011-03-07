@@ -48,7 +48,7 @@ $('#go').click(
 
 <h2>Recent changes</h2>
 <ul>{% for event in events %}
- <li>{{ event.user.nickname }}: <a href="/{{ event.text }}">{{ event.text }}</a>, {{ event.time|date:"D d M Y" }}</li>
+ <li><a href="/{{ event.text }}">{{ event.text }}</a>, {{ event.time|timesince }} ago</li>
 {% endfor %}</ul>
 
 <div id="license">
