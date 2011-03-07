@@ -1,7 +1,22 @@
 {% extends "base.html" %}
 
 {% block title %}Postal Code Map{% endblock %}
-
+{% block script %}
+<script>
+$('#go').click(
+	function(e) {
+		var pin = $("#pincode").val().trim();
+		if(pin.length==6) {
+			window.location.href = "/IN/" + pin;
+		}
+		else {
+			alert("Pincode should be 6 characters.");
+			return false;
+		}
+	}
+);
+</script>
+{% endblock %}
 {% block body %}
 <h1>Postal Code Map</h1>
 
@@ -9,9 +24,11 @@
 
 <dl>
  <dt>How do I contribute to the map?</dt>
- <dd>Go to <code><a href="http://pincode.datameet.org/IN/110001">http://pincode.datameet.org/IN/110001</a></code> (or any other PIN code)
-     <br>Place or move the marker where you think the PIN code should be placed. Save it.
-     <br>Anyone can <a href="/login">log in</a> and edit. A history of all changes will be maintained.</dd>
+ <dd>Anyone can <a href="/login">log in</a> and edit. A history of all changes will be maintained.
+     <br>Enter the zipcode and click Go button to edit.
+     <br><input id="pincode" placeholder="110001">
+         <input type="button" id="go" value="Go">
+ </dd>
 
  <dt>How do I get the data out?</dt>
  <dd>Download a <a href="/download">dump</a>.</dd>
