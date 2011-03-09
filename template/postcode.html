@@ -27,7 +27,7 @@
 <div id="history">
 <h2>Previous edits</h2>
 <ul>{% for row in history %}
- <li>{{ row.u }}: {{ row.p }}, {{ row.a }}. {{ row.x }}, {{ row.y }}</li>
+ <li>{{ row.u }}: {{ row.p }}, {{ row.a }}. <a class="histpoint" href="#" data-lat="{{ row.x }}" data-lng="{{ row.y }}">{{ row.x }}, {{ row.y }}</a></li>
 {% endfor %}</ul>
 </div>
 
@@ -75,21 +75,31 @@ function init() {
   geocoder = new google.maps.Geocoder();
 }
 
+function alsoShow(point) {
+  map.setCenter(point);
+  while (!map.getBounds().contains(marker.getPosition())) { map.setZoom(map.getZoom() - 1); }
+  var searchMarker = new google.maps.Marker({
+      map: map,
+      position: point,
+      icon: 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%e2%80%a2|FFFF00|000000'
+  });
+}
+
 $('#searchform').submit(function(e) {
   geocoder.geocode({'address': $('#search').val()}, function(results, status) {
     if (status == google.maps.GeocoderStatus.OK) {
-      map.setCenter(results[0].geometry.location);
-      while (!map.getBounds().contains(marker.getPosition())) { map.setZoom(map.getZoom() - 1); }
-      var searchMarker = new google.maps.Marker({
-          map: map,
-          position: results[0].geometry.location,
-          icon: 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%e2%80%a2|FFFF00|000000'
-      });
+      alsoShow(results[0].geometry.location);
     } else {
       alert("Geocode was not successful for the following reason: " + status);
     }
   });
   e.preventDefault();
+});
+
+$('.histpoint').click(function(e) {
+  e.preventDefault();
+  var $point = $(this);
+  alsoShow(new google.maps.LatLng($point.attr('data-lat'), $point.attr('data-lng')));
 });
 
 init();
