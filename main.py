@@ -104,8 +104,9 @@ class BuildDownload(webapp.RequestHandler):
 
         for p in codes:
             country, postcode = p.key().name().split('/')
-            out.writerow([country, postcode, p.place_name, p.admin_name1,
-                p.latitude, p.longitude, p.accuracy])
+            out.writerow([country, postcode, p.place_name.encode('utf-8'),
+                p.admin_name1.encode('utf-8'), p.latitude, p.longitude,
+                p.accuracy])
 
         Download(key_name = str(count), text=text.getvalue()).put()
         taskqueue.add(url=self.request.path, method='GET', params={
